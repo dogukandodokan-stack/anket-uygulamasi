@@ -19,6 +19,9 @@
             {% if user.is_authenticated %}
             <div class="d-flex align-items-center gap-3">
                 <span class="text-white-50 small">{{ user.username }}</span>
+                {% if user.is_staff %}
+                <a href="/admin/" class="btn btn-sm btn-warning">Admin Paneli</a>
+                {% endif %}
                 <form method="post" action="/hesap/logout/" class="m-0">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-sm btn-outline-light">Çıkış</button>

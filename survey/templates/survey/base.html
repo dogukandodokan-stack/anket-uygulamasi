@@ -16,6 +16,15 @@
     <nav class="navbar navbar-dark mb-4">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">Anket Sistemi</a>
+            {% if user.is_authenticated %}
+            <div class="d-flex align-items-center gap-3">
+                <span class="text-white-50 small">{{ user.username }}</span>
+                <form method="post" action="/hesap/logout/" class="m-0">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-outline-light">Çıkış</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
     </nav>
     <div class="container pb-5">

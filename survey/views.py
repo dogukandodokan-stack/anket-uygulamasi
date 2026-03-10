@@ -1,12 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Survey, Response, Answer
 
 
+@login_required
 def survey_list(request):
     surveys = Survey.objects.filter(is_active=True).order_by("-created_at")
     return render(request, "survey/list.html", {"surveys": surveys})
 
 
+@login_required
 def survey_detail(request, pk):
     survey = get_object_or_404(Survey, pk=pk, is_active=True)
     questions = survey.questions.prefetch_related("choices").all()
@@ -56,6 +59,7 @@ def survey_detail(request, pk):
     })
 
 
+@login_required
 def thank_you(request, pk):
     survey = get_object_or_404(Survey, pk=pk)
     return render(request, "survey/thank_you.html", {"survey": survey})

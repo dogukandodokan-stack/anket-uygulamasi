@@ -1,0 +1,30 @@
+{% extends "survey/base.html" %}
+
+{% block title %}Açık Anketler{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Açık Anketler</h2>
+
+{% if surveys %}
+    <div class="row g-4">
+        {% for survey in surveys %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ survey.title }}</h5>
+                    {% if survey.description %}
+                    <p class="card-text text-muted">{{ survey.description }}</p>
+                    {% endif %}
+                    <p class="text-muted small">{{ survey.questions.count }} soru</p>
+                </div>
+                <div class="card-footer bg-white">
+                    <a href="{% url 'survey:detail' survey.pk %}" class="btn btn-primary w-100">Ankete Katıl</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">Şu anda aktif anket bulunmamaktadır.</div>
+{% endif %}
+{% endblock %}

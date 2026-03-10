@@ -1,0 +1,35 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<div style="max-width:800px">
+
+    <h1>{{ survey.title }}</h1>
+    <p style="color:#666">
+        Toplam katılımcı: <strong>{{ total_responses }}</strong>
+    </p>
+
+    {% if total_responses == 0 %}
+        <p>Henüz yanıt bulunmamaktadır.</p>
+    {% else %}
+        {% for item in stats %}
+        <div style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:20px;margin-bottom:20px;">
+            <h3 style="margin-top:0;font-size:1rem;">{{ forloop.counter }}. {{ item.question }}</h3>
+
+            {% for choice in item.choices %}
+            <div style="margin-bottom:12px;">
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span>{{ choice.text }}</span>
+                    <span style="color:#666">{{ choice.count }} kişi &nbsp;({{ choice.percentage }}%)</span>
+                </div>
+                <div style="background:#e9ecef;border-radius:4px;height:22px;overflow:hidden;">
+                    <div style="background:#3498db;height:100%;width:{{ choice.percentage }}%;transition:width .4s;"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <a href="/admin/survey/survey/" class="button">← Anketlere Dön</a>
+</div>
+{% endblock %}
